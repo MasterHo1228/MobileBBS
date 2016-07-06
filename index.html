@@ -1,0 +1,227 @@
+<!--Created by Administrator on 2016/5/30 via IntelliJ IDEA.-->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>My Mobile BBS Index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css"/>
+    <script language="JavaScript" src="js/jquery-1.12.4.min.js"></script>
+    <script language="JavaScript" src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script language="JavaScript" src="js/bbsquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/mobilebbs.css">
+</head>
+<body>
+<!-------------HomePage----------------->
+<div data-role="page" id="HomePage">
+    <div data-role="header" data-position="fixed">
+        <h1>Mobile BBS</h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#HomePage" data-icon="home" class="ui-btn-active ui-state-persist">主页</a></li>
+                <li><a href="#Forum" data-icon="info">论坛</a></li>
+            </ul>
+        </div>
+    </div><!-- /header -->
+    <div data-role="content">
+        <div class="mainContent">
+            <p>欢迎来到我自家的Mobile BBS!!</p>
+            <img src="img/logo.png"><br>
+            <a href="#Forum" data-role="button" data-icon="arrow-r" data-inline="true" data-iconpos="right">去逛逛论坛吧~~</a>
+        </div>
+        <div id="indexContent"></div>
+    </div><!-- /content -->
+    <div data-role="footer">
+        <h1 class="copyRight">Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+
+<!-------------Forum----------------->
+<div data-role="page" id="Forum">
+    <div data-role="header" data-position="fixed">
+        <a href="#" data-role="button" data-icon="refresh" id="ForumRefresh">刷新</a>
+        <h1>论坛</h1>
+        <a href="#Login" data-role="button" data-icon="user" class="ui-btn-right btnUser" data-transition="slide">登录</a>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#HomePage" data-icon="home">主页</a></li>
+                <li><a href="#Forum" data-icon="info" class="ui-btn-active ui-state-persist">论坛</a></li>
+            </ul>
+        </div>
+    </div><!-- /header -->
+    <div data-role="content">
+        <form class="ui-filterable">
+            <input id="filterBasic-input" data-type="search">
+        </form>
+        <ul data-role="listview" id="ForumList" data-inset="true" data-filter="true" data-input="#filterBasic-input">
+
+        </ul>
+    </div><!-- /content -->
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar" data-iconpos="left" id="btnFtNewTopic">
+            <ul>
+                <li><a href="#NewTopic" data-role="button" class="ui-btn" data-icon="plus"
+                       data-transition="flow">发布新话题</a></li>
+            </ul>
+        </div><!-- /navbar -->
+        <h1 class="copyRight">Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+
+<!-------------Login----------------->
+<div data-role="page" id="Login">
+    <div data-role="header">
+        <h1>登录</h1>
+        <a href="#" data-role="button" data-rel="back" data-icon="back" data-transition="slide"
+           data-direction="reverse">返回</a>
+    </div><!-- /header -->
+    <div data-role="content">
+        <form action="" method="post" id="formLogin">
+            <label for="usrName" class="ui-hidden-accessible">用户名:</label>
+            <input type="text" name="usrName" id="usrName" placeholder="用户名:">
+            <label for="usrPW" class="ui-hidden-accessible">密码:</label>
+            <input type="password" name="usrPW" id="usrPW" placeholder="密码:">
+            <a href="#" data-role="button" id="btnLogin">登录</a>
+        </form>
+        <a href="#Register" data-role="button" data-transition="pop">注册</a>
+        <div id="loginStatus"></div>
+    </div><!-- /content -->
+    <div data-role="footer">
+        <h1 class="copyRight">Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+
+<!-------------User----------------->
+<div data-role="page" id="User">
+    <div data-role="header" data-position="fixed">
+        <h1>个人账号管理</h1>
+        <a href="#" class="btnBack" data-role="button" data-icon="back" data-transition="slide"
+           data-direction="reverse">返回</a>
+        <a href="#Forum" data-role="button" data-icon="power" class="ui-btn-right btnLogout" data-transition="slide"
+           data-direction="reverse">登出</a>
+    </div><!-- /header -->
+    <div data-role="content">
+        <div data-role="collapsible">
+            <h4>用户信息</h4>
+            <p id="UserInfo"></p>
+        </div>
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-mini="true">
+            <h4>我的帖子</h4>
+            <ul data-role="listview" data-inset="false" id="userTopicList">
+
+            </ul>
+        </div>
+        <div id="userJSEvent"></div>
+    </div><!-- /content -->
+    <div data-role="footer" data-position="fixed">
+        <h1 class="copyRight">Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+
+<!-------------NewTopic----------------->
+<div data-role="page" id="NewTopic">
+    <div data-role="header" data-position="fixed">
+        <h1>发布新话题</h1>
+        <a href="#" data-role="button" data-rel="back" data-icon="back">返回</a>
+    </div><!-- /header -->
+    <div data-role="content">
+        <form id="formNewTopic">
+            <label for="nTopicTitle" class="ui-hidden-accessible">标题:</label>
+            <input type="text" name="nTopicTitle" id="nTopicTitle" placeholder="标题:">
+            <label for="nTopicContent" class="ui-hidden-accessible">话题内容：</label>
+            <textarea name="nTopicContent" id="nTopicContent" placeholder="话题内容："></textarea>
+        </form>
+        <a href="#" data-role="button" id="btnNewTopic">发布</a>
+        <div id="divNewTopicEvent"></div>
+    </div><!-- /content -->
+    <div data-role="footer" class="copyRight">
+        <h1>Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+
+<!-------------editTopic----------------->
+<div data-role="page" id="editTopic">
+    <div data-role="header" data-position="fixed">
+        <h1>编辑话题</h1>
+        <a href="#" data-role="button" data-rel="back" data-icon="back">返回</a>
+    </div><!-- /header -->
+    <div data-role="content">
+        <form id="formEditTopic">
+            <label for="edTopicTitle">标题:</label>
+            <input type="text" name="edTopicTitle" id="edTopicTitle">
+            <label for="edTopicContent">话题内容：</label>
+            <textarea name="edTopicContent" id="edTopicContent"></textarea>
+        </form>
+        <a href="#" data-role="button" id="btnEditTopic">提交</a>
+        <div id="divEditTopicEvent"></div>
+    </div><!-- /content -->
+    <div data-role="footer" class="copyRight">
+        <h1>Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+
+<!-------------PubReply----------------->
+<div data-role="page" id="PubReply">
+    <div data-role="header" data-position="fixed">
+        <h1>发送回复</h1>
+        <a href="#" data-role="button" data-rel="back" data-icon="back">返回</a>
+    </div><!-- /header -->
+    <div data-role="content">
+        <label for="reTopicTitle">话题Title:</label>
+        <input type="text" id="reTopicTitle" value="" disabled>
+        <span id="reTopicTitleArea"></span>
+        <form id="formReply">
+            <label for="ReplyContent" class="ui-hidden-accessible">回复内容：</label>
+            <textarea name="ReplyContent" id="ReplyContent" placeholder="回复内容："></textarea>
+        </form>
+        <a href="#" data-role="button" id="btnPubReply">发布</a>
+        <div id="replyPageEvent"></div>
+    </div><!-- /content -->
+    <div data-role="footer" class="copyRight">
+        <h1>Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+
+<!-------------Register----------------->
+<div data-role="page" id="Register">
+    <div data-role="header" data-position="fixed">
+        <h1>注册</h1>
+        <a href="#" data-role="button" data-rel="back" data-icon="back" data-transition="pop" data-direction="reverse">返回</a>
+    </div><!-- /header -->
+    <div data-role="content">
+        <form action="" method="post" id="formReg">
+            <label for="regUsrName" class="ui-hidden-accessible">用户名:</label>
+            <input type="text" name="user" id="regUsrName" placeholder="用户名:">
+            <label for="regUsrPW" class="ui-hidden-accessible">密码:</label>
+            <input type="password" name="password" id="regUsrPW" placeholder="密码:">
+            <label for="regUsrPWC" class="ui-hidden-accessible">确认密码:</label>
+            <input type="password" id="regUsrPWC" placeholder="确认密码:">
+
+            <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>性别:</legend>
+                <label for="Sra1">男</label>
+                <input type="radio" name="sex" id="Sra1" value="Male" checked>
+                <label for="Sra2">女</label>
+                <input type="radio" name="sex" id="Sra2" value="Female">
+            </fieldset>
+
+            <label for="regUsrTName" class="ui-hidden-accessible">真实姓名:</label>
+            <input type="text" name="tName" id="regUsrTName" placeholder="真实姓名:">
+            <label for="regUsrDateOfBirth">生日:</label>
+            <input type="date" name="DateOfBirth" id="regUsrDateOfBirth">
+            <label for="regUsrEmail" class="ui-hidden-accessible">E-Mail:</label>
+            <input type="email" name="Email" id="regUsrEmail" placeholder="E-Mail:">
+            <label for="regUsrSign" class="ui-hidden-accessible">签名：</label>
+            <textarea name="usrSign" id="regUsrSign" placeholder="签名："></textarea>
+        </form>
+        <a href="#" data-role="button" id="btnReg">注册</a>
+        <div id="RegStatus"></div>
+    </div><!-- /content -->
+    <div data-role="footer" data-position="fixed">
+        <h1 class="copyRight">Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+.copyRight {
+    font-size: 12px !important;
+}
+
+.topicInfo {
+    font-size: 10px !important;
+}
+
+.mainContent {
+    text-align: center;
+}
+
+#btnFtNewTopic {
+    display: none;
+}
