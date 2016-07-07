@@ -32,13 +32,27 @@ function reflashForumList() {//刷新论坛页列表
         }
     })
 }
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+function getUrlVar(name) {
+    return getUrlVars()[name];
+}
 $(document).on("pagebeforeshow", "#Forum", function () {
     $.ajax({
         url: "backend/loginstatus.php", success: function (status) {
             if (status == "login") {
                 loginStatus = true;
                 $(".btnUser").attr("href", "#User").text("用户");
-                $("#btnFtNewTopic").show();
+                $("#btnFtNewReply").show();
             }
         }
     });
@@ -59,11 +73,11 @@ $(document).on("pageinit", "#PubReply", function () {
         });
     })
 });
-//$(document).on("pagehide","#PubReply",function () {
-//    if ($("#ReplyContent").text("")!=""){//离开发送回复页面时清空输入域的文字
-//        $("#ReplyContent").text("");
-//    }
-//});
+$(document).on("pagehide", "#PubReply", function () {
+    if ($("#ReplyContent").text("") != "") {//离开发送回复页面时清空输入域的文字
+        $("#ReplyContent").text("");
+    }
+});
 $(document).on("pagebeforeshow", "#Login", function () {
     if (loginStatus == true) {//如果检测到已经登录网站了，就直接跳转到user页
         location.href("#User");
@@ -151,6 +165,86 @@ $(document).on("pageinit", "#Forum", function () {
         }
     });
 });
+$(document).on("pagebeforeshow", "#Topic", function () {
+    var tIDVal = getUrlVar('tID');
+    var tID = decodeURI(tIDVal);
+    var uID;//记录用户ID
+    $.ajax({//检测登录状态并验证是否为话题或评论作者
+        url: "backend/loginstatus.php", success: function (status) {
+            if (status == "login") {
+                loginStatus = true;
+                $(".btnUser").attr("href", "#User").text("用户");
+                $("#btnFtNewTopic").show();
+            }
+            if (loginStatus == true) {
+                $.ajax({
+                    url: "bakcend/showuserid.php", success: function (data) {
+                        uID = data;
+                    }
+                })
+            }
+        }
+    });
+    $.ajax({
+        url: "backend/loadtopicmain.php", data: {tID: tID}, dataType: 'xml', success: function (data) {
+            $(data).find("topic").each(function () {
+                var topicTitle = $(this).find("title").text();
+                var topicContent = $(this).find("content").text();
+                var topicAuthor = $(this).find("author").text();
+                var AuthorID = $(this).find("authorID").text();
+                var topicTime = $(this).find("time").text();
+
+                $("#topicTitle").append(topicTitle);
+                $("#topicContent").append(topicContent);
+                $("#topicAuthor").append(topicAuthor);
+                $("#topicTime").append(topicTime);
+                if (AuthorID == uID) {
+                    $("#btnTopicEdit").show().attr("href", "edittopic.html?tID=" + tID);
+                    $("#btnDelTopic").show().attr("href", "confirmdeltopic.html?tID=" + tID);
+                }
+
+                $(this).find("reply").each(function () {
+                    var replyID = $(this).find("replyID").text();
+                    var replyerUID = $(this).find("replyerUID").text();
+                    var replyerName = $(this).find("replyerName").text();
+                    var replyContent = $(this).find("replyContent").text();
+                    var replySendTime = $(this).find("replySendTime").text();
+
+                    if (replyerUID == uID) {
+                        var replyRow =
+                            "<div class='ui-corner-all custom-corners'>" +
+                            "<div class='ui-bar ui-bar-a'>" +
+                            "<h3>来自:" + replyerName + "的回复</h3>" +
+                            "</div>" +
+                            "<div class='ui-body ui-body-a'>" +
+                            "<p>" +
+                            replyContent + "<br>" +
+                            "<span class='topicInfo'>发送时间：" + replySendTime + "</span>" +
+                            "<a href='" + "confirmDelReply.html?tID=" + tID + "&replyID=" + replyID + "' class='ui-btn ui-mini ui-btn-inline'>删除回复</a>" +
+                            "</p>" +
+                            "</div>" +
+                            "</div>";
+                    } else {
+                        var replyRow =
+                            "<div class='ui-corner-all custom-corners'>" +
+                            "<div class='ui-bar ui-bar-a'>" +
+                            "<h3>来自:" + replyerName + "的回复</h3>" +
+                            "</div>" +
+                            "<div class='ui-body ui-body-a'>" +
+                            "<p>" +
+                            replyContent + "<br>" +
+                            "<span class='topicInfo'>发送时间：" + replySendTime + "</span>" +
+                            "</p>" +
+                            "</div>" +
+                            "</div>";
+                    }
+                    $("#divTopicReplies").append(replyRow);
+                })
+            })
+        }
+    })
+});
+
 $(document).on("pageinit", "#NewTopic", function () {
     $("#btnNewTopic").on("tap", function () {
         if ($("#nTopicTitle").val() != "" && $("#nTopicContent").val() != "") {
