@@ -85,7 +85,7 @@ $(document).on("pageinit", "#PubReply", function () {
 });
 $(document).on("pagehide", "#PubReply", function () {
     if ($("#ReplyContent").text("") != "") {//离开发送回复页面时清空输入域的文字
-        $("#ReplyContent").text("");
+        $("#ReplyContent").empty();
     }
 });
 $(document).on("pagebeforeshow", "#Login", function () {
@@ -224,7 +224,7 @@ $(document).on("pagebeforeshow", "#Topic", function () {
                                 var replyRow =
                                     "<div class='ui-corner-all custom-corners'>" +
                                     "<div class='ui-bar ui-bar-a'>" +
-                                    "<h3>来自:" + replyerName + "的回复</h3>" +
+                                    "<h3>"+replyerName+"</h3>" +
                                     "</div>" +
                                     "<div class='ui-body ui-body-a'>" +
                                     "<p>" +
