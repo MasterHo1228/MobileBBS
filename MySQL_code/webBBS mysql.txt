@@ -71,7 +71,7 @@ CREATE VIEW viewTopicRepose AS
     time_format(a.cSendTime,'%Y-%m-%d') AS 'cSendDate',
     time_format(a.cSendTime,'%H:%i:%s') AS 'cSendTime',
     c.tCreatedByUID
-  FROM forumrepose a,
+  FROM forumreply a,
     bbsuser b,
     forumtopic c
   WHERE a.cSendUID=b.uID
@@ -92,7 +92,7 @@ INSERT INTO forumtopic VALUES
   (3,'Doge铭明天将进行第六次西游南海校区~~','同上，没什么详细的事情好说的~~',3,'2016-05-30 21:47:53','2016-06-01 01:39:52',62),
   (2,'First Title~~','这是低调哥在这里的第一条帖子~~~',3,'2016-05-30 20:37:15','2016-05-31 23:21:41',21);
 
-INSERT INTO forumrepose VALUES
+INSERT INTO forumreply VALUES
   (1,2,'哎呦不错呦~~~',3,'2016-05-30 20:38:42'),
   (2,3,'interesting!!!',3,'2016-05-30 21:55:09'),
   (3,3,'妈的智障！！！！！',4,'2016-05-31 08:14:43'),
@@ -106,5 +106,5 @@ CREATE TRIGGER trgDelTopic
   BEFORE DELETE ON forumtopic
   FOR EACH ROW
   BEGIN
-    DELETE FROM forumrepose WHERE tID=old.tID;
+    DELETE FROM forumreply WHERE tID=old.tID;
   END ||

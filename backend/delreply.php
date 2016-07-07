@@ -11,7 +11,7 @@ if (!empty($_GET['cID']) && !empty($_SESSION['uID']) && $_GET['isreplyauthor'] =
     $uID = $_SESSION['uID'];
     $cID = $_GET['cID'];
     require_once("dbconn.php");
-    mysqli_query($link, "DELETE FROM forumrepose WHERE cID=$cID AND cSendUID=$uID");
+    mysqli_query($link, "DELETE FROM forumreply WHERE cID=$cID AND cSendUID=$uID");
     echo "<script>alert('删除评论成功！');history.go(-1);</script>";
 
     mysqli_close($link);
