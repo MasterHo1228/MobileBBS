@@ -1,0 +1,33 @@
+<!--Created by MasterHo on 2016/7/7 via IntelliJ IDEA.-->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>发表评论</title>
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css"/>
+    <link rel="stylesheet" href="css/mobilebbs.css">
+</head>
+<body>
+<!-------------editTopic----------------->
+<div data-role="page" id="EditTopic">
+    <div data-role="header" data-position="fixed">
+        <h1>编辑话题</h1>
+        <a href="#" data-role="button" data-rel="back" data-icon="back">返回</a>
+    </div><!-- /header -->
+    <div data-role="content">
+        <form id="formEditTopic">
+            <label for="edTopicTitle">标题:</label>
+            <input type="text" name="edTopicTitle" id="edTopicTitle">
+            <label for="edTopicContent">话题内容：</label>
+            <textarea name="edTopicContent" id="edTopicContent"></textarea>
+        </form>
+        <a href="#" data-role="button" id="btnEditTopic">提交</a>
+        <div id="divEditTopicEvent"></div>
+    </div><!-- /content -->
+    <div data-role="footer" class="copyRight">
+        <h1>Copyright&copy; MasterHo 2016<br>Powered by jQuery Mobile.</h1>
+    </div>
+</div><!-- /page -->
+</body>
+</html>

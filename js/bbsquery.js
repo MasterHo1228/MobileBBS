@@ -271,9 +271,11 @@ $(document).on("pageinit", "#NewTopic", function () {
         }
     });
 });
-$(document).on("pagebeforeshow", "#editTopic", function () {
+$(document).on("pagebeforeshow", "#EditTopic", function () {
+    var tIDVal = getUrlVar('tID');
+    var tID = decodeURI(tIDVal);
     $.ajax({
-        url: "backend/loadedittopic.php", dataType: 'xml', success: function (data) {
+        url: "backend/loadedittopic.php",data:{topicID:tID},dataType: 'xml', success: function (data) {
             $(data).find("topic").each(function () {
                 var tTitle = $(this).find("tTitle").text();
                 var tContent = $(this).find("tContent").text();
@@ -287,10 +289,14 @@ $(document).on("pagebeforeshow", "#editTopic", function () {
         }
     })
 });
-$(document).on("pageinit", "#editTopic", function () {
+$(document).on("pageinit", "#EditTopic", function () {
     $("#btnEditTopic").on("tap", function () {
-        $.post("backend/updatetopic.php", $("#formEditTopic").serialize(), function (data) {
-            $("#divEditTopicEvent").html(data);
-        })
+        var edTopicTitle=$("#edTopicTitle").val();
+        var edTopicContent=$("#edTopicContent").val();
+        if (edTopicTitle!="" && edTopicContent!=""){
+            $.post("backend/updatetopic.php", $("#formEditTopic").serialize(), function (data) {
+                $("#divEditTopicEvent").html(data);
+            })
+        }
     })
 });
