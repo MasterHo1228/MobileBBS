@@ -59,18 +59,28 @@ $(document).on("pagebeforeshow", "#Forum", function () {
     reflashForumList();
 });
 $(document).on("pagebeforeshow", "#PubReply", function () {
+    var tIDVal = getUrlVar('tID');
+    var tID = decodeURI(tIDVal);
     $.ajax({
-        url: "backend/findtopictitle.php", success: function (data) {
-            $("#reTopicTitle").attr("value", data);
-            $("#ReplyContent").text("");
+        url: "backend/findtopictitle.php",data:{topicID:tID},success: function (data) {
+            var title=$(data).find("Title").text();
+            $("#reTopicTitle").attr("value",title);
+            $("#ReplyContent").empty();
         }
     });
 });
 $(document).on("pageinit", "#PubReply", function () {
-    $("#btnPubReply").on("tap", function () {
-        $.post("backend/publishreply.php", $("#formReply").serialize(), function (data) {
-            $("#replyPageEvent").html(data);
-        });
+    var tIDVal = getUrlVar('tID');
+    var tID = decodeURI(tIDVal);
+    $("#btnReplyPub").on("tap", function () {
+        var replyContent=$("#ReplyContent").val();
+        if (replyContent!=""){
+            $.post("backend/publishreply.php", {topicID:tID,ReplyContent:replyContent}, function (data) {
+                $("#replyPageEvent").html(data);
+            });
+        }else{
+            alert("请填写评论内容！");
+        }
     })
 });
 $(document).on("pagehide", "#PubReply", function () {
@@ -178,6 +188,7 @@ $(document).on("pagebeforeshow", "#Topic", function () {
             }
         },complete:function () {
             if(loginStatus==true){
+                $("#btnPubReply").css("display","block").attr("href","pubreply.html?tID="+tID);
                 $.ajax({
                     url: "backend/showuserid.php",dataType:'xml',success: function (data) {
                         uID = $(data).find("UserID").text();

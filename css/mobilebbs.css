@@ -13,6 +13,6 @@
 #btnFtNewTopic {
     display: none;
 }
-#btnTopicEdit,#btnDelTopic{
+#btnTopicEdit,#btnDelTopic,#btnPubReply{
     display: none;
 }
