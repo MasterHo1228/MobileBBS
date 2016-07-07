@@ -280,8 +280,8 @@ $(document).on("pagebeforeshow", "#EditTopic", function () {
                 var tTitle = $(this).find("tTitle").text();
                 var tContent = $(this).find("tContent").text();
 
-                $("#edTopicTitle").attr("value", tTitle);
-                $("#edTopicContent").text(tContent);
+                $("#edTopicTitle").val(tTitle);
+                $("#edTopicContent").val(tContent);
             })
         },
         error: function () {
