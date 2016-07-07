@@ -23,7 +23,7 @@ if (!empty($_SESSION['uID'])) {
 
         echo "<topic>";
         echo "<tID>" . $rs['tID'] . "</tID>";
-        echo "<tLink>" . "topic.php?tID=" . $tID . "</tLink>";
+        echo "<tLink>" . "topic.html?tID=" . $tID . "</tLink>";
         echo "<tTitle>" . $tTitle . "</tTitle>";
         echo "<tContent>" . $tContent . "</tContent>";
         echo "<tCreatedDate>" . $tCreatedDate . "</tCreatedDate>";

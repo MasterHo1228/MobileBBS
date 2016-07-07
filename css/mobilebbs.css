@@ -13,3 +13,6 @@
 #btnFtNewTopic {
     display: none;
 }
+#btnTopicEdit,#btnDelTopic{
+    display: none;
+}

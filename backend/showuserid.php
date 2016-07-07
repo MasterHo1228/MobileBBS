@@ -6,7 +6,8 @@
  * Time: 12:02
  */
 session_start();
+header("Content-type: text/xml");
 if (!empty($_SESSION['uID'])){
-    echo $_SESSION['uID'];
+    echo "<UserID>".$_SESSION['uID']."</UserID>";
 }
 ?>
