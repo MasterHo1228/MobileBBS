@@ -185,6 +185,7 @@ $(document).on("pagebeforeshow", "#Topic", function () {
             }
         }
     });
+    $.post("backend/addtopiccount.php",{tID:tID});
     $.ajax({
         url: "backend/loadtopicmain.php", data: {tID: tID}, dataType: 'xml', success: function (data) {
             $(data).find("topic").each(function () {
