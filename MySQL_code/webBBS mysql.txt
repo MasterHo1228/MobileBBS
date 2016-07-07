@@ -61,7 +61,7 @@ CREATE VIEW viewTopics AS
     bbsuser b
   WHERE a.tCreatedByUID=b.uID;
   
-CREATE VIEW viewTopicRepose AS
+CREATE VIEW viewTopicReply AS
   SELECT
     a.cID,
     a.tID,
