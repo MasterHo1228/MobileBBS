@@ -2,6 +2,7 @@
  * Created by Administrator on 2016/6/2.
  */
 var loginStatus = false;
+var tIDVal,tID;
 function reflashForumList() {//刷新论坛页列表
     $("#ForumList").empty();
     $.ajax({
@@ -45,6 +46,13 @@ function getUrlVars() {
 
 function getUrlVar(name) {
     return getUrlVars()[name];
+}
+function confirmDelTopic(tID) {
+    if (confirm("确定要删除话题吗？")){
+        $.post("backend/deltopic.php",{tID:tID},function (msg) {
+            $("#divTopicEvent").html(msg);
+        });
+    }
 }
 $(document).on("pagebeforeshow", "#Forum", function () {
     $.ajax({
@@ -176,8 +184,8 @@ $(document).on("pageinit", "#Forum", function () {
     });
 });
 $(document).on("pagebeforeshow", "#Topic", function () {
-    var tIDVal = getUrlVar('tID');
-    var tID = decodeURI(tIDVal);
+    tIDVal = getUrlVar('tID');
+    tID = decodeURI(tIDVal);
     var uID;//记录用户ID
     $.ajax({//检测登录状态并验证是否为话题或评论作者
         url: "backend/loginstatus.php", success: function (status) {
@@ -210,7 +218,7 @@ $(document).on("pagebeforeshow", "#Topic", function () {
                         $("#topicTime").append(topicTime);
                         if (uID == AuthorID) {
                             $("#btnTopicEdit").css("display","inline-block").attr("href", "edittopic.html?tID=" + tID);
-                            $("#btnDelTopic").css("display","inline-block").attr("href", "confirmdeltopic.html?tID=" + tID);
+                            $("#btnDelTopic").css("display","inline-block");
                         }
 
                         $(this).find("reply").each(function () {
@@ -230,7 +238,7 @@ $(document).on("pagebeforeshow", "#Topic", function () {
                                     "<p>" +
                                     replyContent + "<br>" +
                                     "<span class='topicInfo'>发送时间：" + replySendTime + "</span>" +
-                                    "<a href='" + "confirmDelReply.html?tID=" + tID + "&replyID=" + replyID + "' class='ui-btn ui-mini ui-btn-inline'>删除回复</a>" +
+                                    "<button class='btnDelReply ui-btn ui-mini ui-btn-inline' data-value='"+replyID+"'>删除回复</button>" +
                                     "</p>" +
                                     "</div>" +
                                     "</div>";
@@ -248,7 +256,7 @@ $(document).on("pagebeforeshow", "#Topic", function () {
                                     "</div>" +
                                     "</div>";
                             }
-                            $("#divTopicReplies").append(replyRow);
+                            $("#divTopicReplies").append(replyRow).trigger("create");
                         })
                     })
                 },complete:function () {
@@ -257,6 +265,24 @@ $(document).on("pagebeforeshow", "#Topic", function () {
             })
         }
     });
+});
+
+$(document).on("pageinit", "#Topic", function () {
+    if (tID==""){
+        tIDVal = getUrlVar('tID');
+        tID = decodeURI(tIDVal);
+    }
+    $("#btnDelTopic").on("tap",function () {
+        if (tID!=""){
+            confirmDelTopic(tID);
+        } else {
+          alert("操作失败！");
+        }
+    });
+    $("button").on("tap","[class='btnDelReply ui-btn ui-mini ui-btn-inline']",function () {
+        var replyID=$(this).attr("data-value");
+        alert(replyID);
+    })
 });
 
 $(document).on("pageinit", "#NewTopic", function () {
@@ -280,8 +306,8 @@ $(document).on("pagebeforeshow", "#EditTopic", function () {
                 var tTitle = $(this).find("tTitle").text();
                 var tContent = $(this).find("tContent").text();
 
-                $("#edTopicTitle").val(tTitle);
-                $("#edTopicContent").val(tContent);
+                $("#edTopicTitle").text(tTitle);
+                $("#edTopicContent").text(tContent);
             })
         },
         error: function () {
@@ -297,6 +323,8 @@ $(document).on("pageinit", "#EditTopic", function () {
             $.post("backend/updatetopic.php", $("#formEditTopic").serialize(), function (data) {
                 $("#divEditTopicEvent").html(data);
             })
+        }else{
+            alert("请输入话题信息！");
         }
     })
 });

@@ -7,17 +7,17 @@
  */
 session_start();
 header("Content-type: text/html; charset=utf-8");
-if (!empty($_GET['tID']) && !empty($_SESSION['topicID']) && !empty($_SESSION['uID']) && $_GET['isauthor'] == true) {
-    $GtID = $_GET['tID'];
-    $StID = $_SESSION['topicID'];
-    if ($GtID == $StID) {
-        $uID = $_SESSION['uID'];
-        require_once("dbconn.php");
-        mysqli_query($link, "DELETE FROM forumtopic WHERE tID=$GtID AND tCreatedByUID=$uID");
+if (!empty($_POST['tID']) && !empty($_SESSION['uID'])) {
+    $tID = $_POST['tID'];
+    $uID = $_SESSION['uID'];
+    require_once("dbconn.php");
+    mysqli_query($link, "DELETE FROM forumtopic WHERE tID=$tID AND tCreatedByUID=$uID ;");
+    if (empty(mysqli_error($link))){
         echo "<script>alert('删除话题成功！');history.go(-1);</script>";
-
-        mysqli_close($link);
+    }else{
+        echo mysqli_error($link);
     }
+    mysqli_close($link);
 } else {
     echo "<script>alert('非法操作！！');history.go(-1);</script>";
 }
