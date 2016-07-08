@@ -55,6 +55,7 @@ function confirmDelTopic(tID) {
     }
 }
 $(document).on("pagebeforeshow", "#Forum", function () {
+    $.mobile.loading("show");
     $.ajax({
         url: "backend/loginstatus.php", success: function (status) {
             if (status == "login") {
@@ -65,6 +66,7 @@ $(document).on("pagebeforeshow", "#Forum", function () {
         }
     });
     reflashForumList();
+    $.mobile.loading("hide");
 });
 $(document).on("pagebeforeshow", "#PubReply", function () {
     var tIDVal = getUrlVar('tID');
@@ -175,7 +177,9 @@ $(document).on("pageinit", "#Register", function () {//注册页面
 });
 $(document).on("pageinit", "#Forum", function () {
     $("#ForumRefresh").on("tap", function () {//论坛页内的刷新按钮
+        $.mobile.loading("show");
         reflashForumList();
+        $.mobile.loading("hide");
     });
     $(".btnUser").on("tap", function () {
         if (loginStatus == true) {
