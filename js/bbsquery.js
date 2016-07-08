@@ -188,6 +188,7 @@ $(document).on("pageinit", "#Forum", function () {
     });
 });
 $(document).on("pagebeforeshow", "#Topic", function () {
+    $.mobile.loading("show");
     tIDVal = getUrlVar('tID');
     tID = decodeURI(tIDVal);
     var uID;//记录用户ID
@@ -269,6 +270,7 @@ $(document).on("pagebeforeshow", "#Topic", function () {
             })
         }
     });
+    $.mobile.loading("hide");
 });
 
 $(document).on("pageinit", "#Topic", function () {
