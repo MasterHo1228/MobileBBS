@@ -54,7 +54,7 @@ function confirmDelTopic(tID) {
         });
     }
 }
-$(document).on("pagebeforeshow", "#Forum", function () {
+$(document).on("pagebeforecreate", "#Forum", function () {
     $.mobile.loading("show");
     $.ajax({
         url: "backend/loginstatus.php", success: function (status) {
@@ -68,7 +68,7 @@ $(document).on("pagebeforeshow", "#Forum", function () {
     reflashForumList();
     $.mobile.loading("hide");
 });
-$(document).on("pagebeforeshow", "#PubReply", function () {
+$(document).on("pagebeforecreate", "#PubReply", function () {
     var tIDVal = getUrlVar('tID');
     var tID = decodeURI(tIDVal);
     $.ajax({
@@ -98,9 +98,9 @@ $(document).on("pagehide", "#PubReply", function () {
         $("#ReplyContent").empty();
     }
 });
-$(document).on("pagebeforeshow", "#Login", function () {
+$(document).on("pagebeforecreate", "#Login", function () {
     if (loginStatus == true) {//如果检测到已经登录网站了，就直接跳转到user页
-        location.href("#User");
+        location.href="#User";
     }
 });
 $(document).on("pageinit", "#Login", function () {
@@ -119,7 +119,8 @@ $(document).on("pageinit", "#Login", function () {
         }
     })
 });
-$(document).on("pagebeforeshow", "#User", function () {
+$(document).on("pagebeforecreate", "#User", function () {
+    $("#UserInfo").load("backend/showuserinfo.php");//加载用户信息
     $.ajax({
         url: "backend/showusertopics.php", dataType: 'xml', success: function (data) {//ajax拉取该用户的话题概览信息
             $("#userTopicList").empty();
@@ -132,7 +133,7 @@ $(document).on("pagebeforeshow", "#User", function () {
 
                 var titleRow =
                     "<li data-role='list-divider'>" + tCreatedDate + "&nbsp;" + tCreatedTime + "</li>" +
-                    "<li>" + "<a href='" + tLink + "'>" +
+                    "<li>" + "<a href='" + tLink + "' data-transition='slideup'>" +
                     "<h2>" + tTitle + "</h2>" +
                     "<p>" + tContent + "</p>" +
                     "</a>" + "</li>";
@@ -146,7 +147,6 @@ $(document).on("pagebeforeshow", "#User", function () {
     });
 });
 $(document).on("pageinit", "#User", function () {
-    $("#UserInfo").load("backend/showuserinfo.php");//加载用户信息
     $(".btnLogout").on("tap", function () {
         $.ajax({
             url: "backend/logout.php", success: function (data) {
@@ -301,7 +301,7 @@ $(document).on("pageinit", "#NewTopic", function () {
         }
     });
 });
-$(document).on("pagebeforeshow", "#EditTopic", function () {
+$(document).on("pagebeforecreate", "#EditTopic", function () {
     var tIDVal = getUrlVar('tID');
     var tID = decodeURI(tIDVal);
     $.ajax({
