@@ -312,7 +312,7 @@ $(document).on("pagebeforecreate", "#EditTopic", function () {
                 var tTitle = $(this).find("tTitle").text();
                 var tContent = $(this).find("tContent").text();
 
-                $("#edTopicTitle").text(tTitle);
+                $("#edTopicTitle").attr("value",tTitle);
                 $("#edTopicContent").text(tContent);
             })
         },
