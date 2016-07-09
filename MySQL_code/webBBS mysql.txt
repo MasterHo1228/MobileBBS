@@ -35,7 +35,7 @@ CREATE TABLE forumTopic(
 
 ALTER TABLE forumTopic ADD CONSTRAINT FKTopicUID FOREIGN KEY (tCreatedByUID) REFERENCES bbsUser(uID);
 
-CREATE TABLE forumRepose(
+CREATE TABLE forumReply(
   cID BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   tID BIGINT UNSIGNED NOT NULL ,
   cContent TEXT NOT NULL ,
@@ -77,29 +77,7 @@ CREATE VIEW viewTopicReply AS
   WHERE a.cSendUID=b.uID
         AND a.tID=c.tID
   GROUP BY a.cID;
-  
-insert into bbsuser VALUES
-('4','DogeMing','123456','','','','','','','2016-05-31 08:14:29'),
-('5','zhx','123456','Female','张污娴','1996-03-28','','','','2016-05-31 17:11:10'),
-('6','低调哥','123456','Male','','1996-12-31','','要做个低调的美男子~~????????','','2016-05-31 17:20:18');
 
-
-INSERT INTO forumtopic VALUES
-  (5,'Happy children\'s day!!','低调哥在此默默的祝各位熊孩子 各位大小孩 各位童样痴呆患者们
-  一年一度的儿童节快乐~~
-  至于礼物的话。。。找到我再跟我要吧 哈哈哈！！！！！！！',6,'2016-06-01 00:00:01','2016-06-01 01:03:05','5'),
-  (4,'纯粹测试下新功能，哈哈！！','同上????????',3,'2016-05-31 23:16:06','2016-05-31 23:17:03',4),
-  (3,'Doge铭明天将进行第六次西游南海校区~~','同上，没什么详细的事情好说的~~',3,'2016-05-30 21:47:53','2016-06-01 01:39:52',62),
-  (2,'First Title~~','这是低调哥在这里的第一条帖子~~~',3,'2016-05-30 20:37:15','2016-05-31 23:21:41',21);
-
-INSERT INTO forumreply VALUES
-  (1,2,'哎呦不错呦~~~',3,'2016-05-30 20:38:42'),
-  (2,3,'interesting!!!',3,'2016-05-30 21:55:09'),
-  (3,3,'妈的智障！！！！！',4,'2016-05-31 08:14:43'),
-  (4,3,'楼上洗洗睡吧~',3,'2016-05-31 08:55:19'),
-  (5,3,'我就默默的看着你们装逼~~~',6,'2016-06-01 01:38:48');
-  
-//trigger 删掉topic的时候顺便把回复都删掉
 DELIMITER ||
 
 CREATE TRIGGER trgDelTopic

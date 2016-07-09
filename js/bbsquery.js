@@ -54,14 +54,14 @@ function confirmDelTopic(tID) {
         });
     }
 }
-$(document).on("pagebeforecreate", "#Forum", function () {
+$(document).on("pagebeforeshow", "#Forum", function () {
     $.mobile.loading("show");
     $.ajax({
         url: "backend/loginstatus.php", success: function (status) {
             if (status == "login") {
                 loginStatus = true;
                 $(".btnUser").attr("href", "#User").text("用户");
-                $("#btnFtNewReply").show();
+                $("#btnFtNewTopic").show();
             }
         }
     });
