@@ -16,8 +16,8 @@ if (!empty($_SESSION['uID'])) {
     echo "<Topics>";
     while ($rs = mysqli_fetch_array($queryFind)) {
         $tID = $rs['tID'];
-        $tTitle = $rs['tTitle'];
-        $tContent = $rs['tContent'];
+        $tTitle = html_entity_decode($rs['tTitle']);
+        $tContent = html_entity_decode($rs['tContent']);
         $tCreatedDate = $rs['tCreatedDate'];
         $tCreatedTime = $rs['tCreatedTime'];
 

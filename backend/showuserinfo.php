@@ -15,12 +15,12 @@ if (!empty($_SESSION['uID'])) {
     $query = mysqli_query($link, $strsql);
     while ($rs = mysqli_fetch_array($query)) {
         $uID = $rs['uID'];
-        $uName = $rs['uName'];
+        $uName = html_entity_decode($rs['uName']);
         @$uSex = $rs['uSex'];
-        @$uTrueName = $rs['uTrueName'];
-        @$uDateOfBirth = $rs['uDateOfBirth'];
-        @$uEmail = $rs['uEmail'];
-        @$uSign = $rs['uSign'];
+        @$uTrueName = html_entity_decode($rs['uTrueName']);
+        @$uDateOfBirth = html_entity_decode($rs['uDateOfBirth']);
+        @$uEmail = html_entity_decode($rs['uEmail']);
+        @$uSign = html_entity_decode($rs['uSign']);
 
         echo "<ul>";
         echo "<li>用户ID:" . $uID . "</li>";

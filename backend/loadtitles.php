@@ -14,11 +14,11 @@ echo "<?xml version='1.0' encoding='UTF-8'?>";
 echo "<Topics>";
 while ($rs = mysqli_fetch_array($queryFind)) {
     $tID = $rs['tID'];
-    $tTitle = $rs['tTitle'];
-    $tContent = $rs['tContent'];
+    $tTitle = html_entity_decode($rs['tTitle']);
+    $tContent = html_entity_decode($rs['tContent']);
     $tCreatedDate = $rs['tCreatedDate'];
     $tCreatedTime = $rs['tCreatedTime'];
-    $uName = $rs['uName'];
+    $uName = html_entity_decode($rs['uName']);
     $tClickCount = $rs['tClickCount'];
     echo "<topic>";
     echo "<tID>" . $rs['tID'] . "</tID>";

@@ -10,8 +10,8 @@ if (!empty($_POST['nTopicTitle']) && !empty($_POST['nTopicContent'])) {
     require_once("dbconn.php");
     $uID = $_SESSION['uID'];
 
-    $tTitle = mysqli_real_escape_string($link, $_POST['nTopicTitle']);
-    $tContent = mysqli_real_escape_string($link, $_POST['nTopicContent']);
+    $tTitle = htmlentities((mysqli_real_escape_string($link, $_POST['nTopicTitle'])),ENT_QUOTES,'UTF-8');
+    $tContent = htmlentities((mysqli_real_escape_string($link, $_POST['nTopicContent'])),ENT_QUOTES,'UTF-8');
 
     $queryPub = mysqli_query($link, "INSERT INTO forumtopic(tTitle,tContent,tCreatedByUID) VALUES ('$tTitle','$tContent',$uID);");
     if ($queryPub) {

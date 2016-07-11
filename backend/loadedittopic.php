@@ -17,8 +17,8 @@ if (!empty($_SESSION['uID']) && !empty($_GET['topicID'])) {
 
     if (mysqli_num_rows($queryFind)==1){
         while ($rs = mysqli_fetch_array($queryFind)) {
-            $tTitle = $rs['tTitle'];
-            $tContent = $rs['tContent'];
+            $tTitle = html_entity_decode($rs['tTitle']);
+            $tContent = html_entity_decode($rs['tContent']);
             echo "<topic>";
             echo "<tTitle>" . $tTitle . "</tTitle>";
             echo "<tContent>" . $tContent . "</tContent>";

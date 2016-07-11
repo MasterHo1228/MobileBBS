@@ -14,7 +14,7 @@ if (!empty($_GET['topicID']) && !empty($_SESSION['uID'])) {
     $queryFind = mysqli_query($link, "SELECT tTitle FROM forumtopic WHERE tID=$tID;");
     echo "<?xml version='1.0' encoding='UTF-8'?>";
     while ($rs = mysqli_fetch_array($queryFind)) {
-        $tTitle = $rs[0];
+        $tTitle = html_entity_decode($rs[0]);
         echo "<Title>".$tTitle."</Title>";
     }
     mysqli_close($link);

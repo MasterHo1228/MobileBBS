@@ -10,13 +10,13 @@ if (!empty($_POST['user']) && !empty($_POST['password'])) {
     require_once("dbconn.php");
 
     //获取表单值
-    $usrName = mysqli_real_escape_string($link, $_POST['user']);
-    $usrPass = mysqli_real_escape_string($link, $_POST['password']);
-    $usrSex = mysqli_real_escape_string($link, $_POST['sex']);
-    $usrTName = mysqli_real_escape_string($link, $_POST['tName']);
-    $usrDateOfBirth = mysqli_real_escape_string($link, $_POST['DateOfBirth']);
-    $usrEmail = mysqli_real_escape_string($link, $_POST['Email']);
-    $usrSign = mysqli_real_escape_string($link, $_POST['usrSign']);
+    $usrName = htmlentities((mysqli_real_escape_string($link, $_POST['user'])),ENT_QUOTES,'UTF-8');
+    $usrPass = htmlentities((mysqli_real_escape_string($link, $_POST['password'])),ENT_QUOTES,'UTF-8');
+    $usrSex = htmlentities((mysqli_real_escape_string($link, $_POST['sex'])),ENT_QUOTES,'UTF-8');
+    $usrTName = htmlentities((mysqli_real_escape_string($link, $_POST['tName'])),ENT_QUOTES,'UTF-8');
+    $usrDateOfBirth = htmlentities((mysqli_real_escape_string($link, $_POST['DateOfBirth'])),ENT_QUOTES,'UTF-8');
+    $usrEmail = htmlentities((mysqli_real_escape_string($link, $_POST['Email'])),ENT_QUOTES,'UTF-8');
+    $usrSign = htmlentities((mysqli_real_escape_string($link, $_POST['usrSign'])),ENT_QUOTES,'UTF-8');
 
     $strsql = "INSERT INTO bbsUser(uName,uPassWord,uSex,uTrueName,uDateOfBirth,uEmail,uSign) VALUES ('$usrName','$usrPass','$usrSex','$usrTName','$usrDateOfBirth','$usrEmail','$usrSign');";
     if (mysqli_query($link, $strsql)) {

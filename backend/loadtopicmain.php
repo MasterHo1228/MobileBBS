@@ -18,13 +18,13 @@ if (!empty($_GET['tID'])){
             echo "<topic>";
             $tID = $rs['tID'];
             echo "<ID>".$tID."</ID>";
-            $tTitle = $rs['tTitle'];
+            $tTitle = html_entity_decode($rs['tTitle']);
             echo "<title>".$tTitle."</title>";
-            $tContent = $rs['tContent'];
+            $tContent = html_entity_decode($rs['tContent']);
             echo "<content>".$tContent."</content>";
             $topicAuthorID = $rs['tCreatedByUID'];
             echo "<authorID>".$topicAuthorID."</authorID>";
-            $uName = $rs['uName'];
+            $uName = html_entity_decode($rs['uName']);
             echo "<author>".$uName."</author>";
             $tCreatedDate = $rs['tCreatedDate'];
             $tCreatedTime = $rs['tCreatedTime'];
@@ -39,9 +39,9 @@ if (!empty($_GET['tID'])){
                         echo "<replyID>".$replyID."</replyID>";
                         $replyerUID=$rsReply['cSendUID'];
                         echo "<replyerUID>".$replyerUID."</replyerUID>";
-                        $replyerName=$rsReply['uName'];
+                        $replyerName=html_entity_decode($rsReply['uName']);
                         echo "<replyerName>".$replyerName."</replyerName>";
-                        $replyerContent=$rsReply['cContent'];
+                        $replyerContent=html_entity_decode($rsReply['cContent']);
                         echo "<replyContent>".$replyerContent."</replyContent>";
                         $replyDate=$rsReply['cSendDate'];
                         $replyTime=$rsReply['cSendTime'];

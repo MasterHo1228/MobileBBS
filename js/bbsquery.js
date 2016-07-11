@@ -326,7 +326,7 @@ $(document).on("pageinit", "#EditTopic", function () {
         var edTopicTitle=$("#edTopicTitle").val();
         var edTopicContent=$("#edTopicContent").val();
         if (edTopicTitle!="" && edTopicContent!=""){
-            $.post("backend/updatetopic.php", $("#formEditTopic").serialize(), function (data) {
+            $.post("backend/updatetopic.php", {topicID:tID,edTopicTitle:edTopicTitle,edTopicContent:edTopicContent} , function (data) {
                 $("#divEditTopicEvent").html(data);
             })
         }else{
