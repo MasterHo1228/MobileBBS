@@ -1,7 +1,4 @@
-﻿create database webBBS charset utf8;
-
-ALTER DATABASE webBBS CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-
+﻿create database webBBS CHARACTER SET = utf8mb4;
 use webBBS;
 
 CREATE TABLE bbsUser(
@@ -15,13 +12,19 @@ CREATE TABLE bbsUser(
   uSign TEXT,
   uAvater VARCHAR(100),
   uRegTime TIMESTAMP NOT NULL DEFAULT current_timestamp
-)CHAR SET utf8;
+);
+
+INSERT INTO bbsUser SET uName='Demo1',uPassWord='123456';
+INSERT INTO bbsUser SET uName='demo2',uPassWord='123456';
+INSERT INTO bbsUser SET uName='demo3',uPassWord='123456';
 
 CREATE TABLE adminUser(
   aID INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   aName VARCHAR(15) NOT NULL ,
   aPassWord VARCHAR(20) NOT NULL
-)CHAR SET utf8;
+);
+
+INSERT INTO adminUser SET aName='admin',aPassWord='123456';
 
 CREATE TABLE forumTopic(
   tID BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -30,22 +33,19 @@ CREATE TABLE forumTopic(
   tCreatedByUID INT UNSIGNED NOT NULL ,
   tCreatedTime TIMESTAMP NOT NULL DEFAULT current_timestamp,
   tEditTime TIMESTAMP NOT NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
-  tClickCount INT UNSIGNED DEFAULT 0
-)CHAR SET utf8;
-
-ALTER TABLE forumTopic ADD CONSTRAINT FKTopicUID FOREIGN KEY (tCreatedByUID) REFERENCES bbsUser(uID);
+  tClickCount INT UNSIGNED DEFAULT 0 ,
+  CONSTRAINT FKTopicUID FOREIGN KEY (tCreatedByUID) REFERENCES bbsUser(uID)
+);
 
 CREATE TABLE forumReply(
   cID BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   tID BIGINT UNSIGNED NOT NULL ,
   cContent TEXT NOT NULL ,
   cSendUID INT UNSIGNED NOT NULL ,
-  cSendTime TIMESTAMP NOT NULL DEFAULT current_timestamp
-)CHAR SET utf8;
-
-ALTER TABLE forumRepose ADD CONSTRAINT FKContactTopicID FOREIGN KEY (tID) REFERENCES forumTopic(tID);
-
-ALTER TABLE forumRepose ADD CONSTRAINT FKContactUID FOREIGN KEY (cSendUID) REFERENCES bbsUser(uID);
+  cSendTime TIMESTAMP NOT NULL DEFAULT current_timestamp,
+  CONSTRAINT FKContactTopicID FOREIGN KEY (tID) REFERENCES forumTopic(tID),
+  CONSTRAINT FKContactUID FOREIGN KEY (cSendUID) REFERENCES bbsUser(uID)
+);
 
 CREATE VIEW viewTopics AS
   SELECT
