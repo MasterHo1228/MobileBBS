@@ -285,10 +285,11 @@ $(document).on("pageinit", "#Topic", function () {
           alert("操作失败！");
         }
     });
-    $("button").on("tap","[class='btnDelReply ui-btn ui-mini ui-btn-inline']",function () {
+
+    $("#divTopicReplies").delegate('.btnDelReply', 'click', function () {
         var replyID=$(this).attr("data-value");
         alert(replyID);
-    })
+    });
 });
 
 $(document).on("pageinit", "#NewTopic", function () {
