@@ -243,7 +243,7 @@ $(document).on("pagebeforeshow", "#Topic", function () {
                                     "<p>" +
                                     replyContent + "<br>" +
                                     "<span class='topicInfo'>发送时间：" + replySendTime + "</span>" +
-                                    "<button class='btnDelReply ui-btn ui-mini ui-btn-inline' data-value='"+replyID+"'>删除回复</button>" +
+                                    /*"<button class='btnDelReply ui-btn ui-mini ui-btn-inline' data-value='"+replyID+"'>删除回复</button>" +*/
                                     "</p>" +
                                     "</div>" +
                                     "</div>";
@@ -286,10 +286,10 @@ $(document).on("pageinit", "#Topic", function () {
         }
     });
 
-    $("#divTopicReplies").delegate('.btnDelReply', 'click', function () {
-        var replyID=$(this).attr("data-value");
-        alert(replyID);
-    });
+    // $("#divTopicReplies").delegate('.btnDelReply', 'click', function () {
+    //     var replyID=$(this).attr("data-value");
+    //     alert(replyID);
+    // });
 });
 
 $(document).on("pageinit", "#NewTopic", function () {
